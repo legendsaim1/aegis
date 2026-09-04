@@ -1,0 +1,294 @@
+/* ============================================
+   Landing Page — Layout & Navigation
+   ============================================ */
+
+/* ---- Navbar ---- */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  transition: box-shadow var(--transition-base);
+  background-color: var(--bg-dark);
+}
+
+.navScrolled {
+  box-shadow: var(--shadow-md);
+}
+
+.navInner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 101;
+}
+
+/* ---- Logo ---- */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.logoIcon {
+  font-size: var(--text-xl);
+  color: var(--accent);
+  line-height: 1;
+}
+
+.logoText {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-inverse);
+  letter-spacing: 0.08em;
+}
+
+/* ---- Nav Links (Desktop) ---- */
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.navLink {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(250, 250, 248, 0.7);
+  transition: color var(--transition-fast);
+  position: relative;
+  text-decoration: none;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: width var(--transition-base);
+}
+
+.navLink:hover,
+.navLinkActive {
+  color: var(--text-inverse);
+}
+
+.navLink:hover::after,
+.navLinkActive::after {
+  width: 100%;
+}
+
+/* ---- Nav Actions (Desktop) ---- */
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.navLogin {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(250, 250, 248, 0.7);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast),
+    background-color var(--transition-fast);
+  text-decoration: none;
+}
+
+.navLogin:hover {
+  color: var(--text-inverse);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.navSignup {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--accent);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast),
+    transform var(--transition-fast);
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.navSignup:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.navSignup:active {
+  background-color: var(--accent-active);
+  transform: translateY(0);
+}
+
+/* ---- Back to AEGIS link (Sub-pages) ---- */
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: rgba(250, 250, 248, 0.9);
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--text-inverse);
+  background-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateX(-2px);
+}
+
+/* ---- Mobile Toggle ---- */
+
+.mobileToggle {
+  display: none;
+  padding: var(--space-2);
+  margin-right: calc(var(--space-2) * -1);
+}
+
+.hamburger {
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-inverse);
+  transition: background-color var(--transition-fast);
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-inverse);
+  transition: transform var(--transition-base), top var(--transition-base);
+}
+
+.hamburger::before {
+  top: -6px;
+}
+
+.hamburger::after {
+  top: 6px;
+}
+
+.hamburgerOpen {
+  background-color: transparent;
+}
+
+.hamburgerOpen::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.hamburgerOpen::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* ---- Mobile Dropdown Menu ---- */
+
+.mobileMenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-dark);
+  padding-top: var(--nav-height);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--transition-base), opacity var(--transition-base), visibility var(--transition-base);
+  z-index: 100;
+  border-bottom: 1px solid var(--bg-dark-secondary);
+}
+
+.mobileMenuOpen {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobileMenuInner {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  gap: var(--space-4);
+}
+
+.mobileNavLink {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-inverse);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--bg-dark-secondary);
+  text-decoration: none;
+}
+
+.mobileNavActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.mobileNavLogin,
+.mobileNavSignup {
+  text-align: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mobileNavLogin {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-inverse);
+}
+
+.mobileNavSignup {
+  background-color: var(--accent);
+  color: var(--white);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 768px) {
+  .navLinks,
+  .navActions {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: block;
+  }
+}

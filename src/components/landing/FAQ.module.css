@@ -1,0 +1,128 @@
+/* ============================================
+   FAQ Section
+   ============================================ */
+
+.section {
+  background-color: var(--bg-secondary);
+  padding: var(--space-20) var(--space-6);
+  border-top: 1px solid var(--border-light);
+  position: relative;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+/* ---- Header ---- */
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.label {
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+
+.title {
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ---- Accordion ---- */
+
+.accordionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.details {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.details[open] {
+  background-color: var(--white);
+  border-color: var(--border-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-5) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none; /* Hide default triangle in most browsers */
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.summary::-webkit-details-marker {
+  display: none; /* Hide default triangle in WebKit */
+}
+
+.summary:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.details[open] .summary {
+  border-bottom: 1px solid var(--border-light);
+  background-color: transparent;
+}
+
+.chevron {
+  color: var(--text-tertiary);
+  transition: transform var(--transition-base), color var(--transition-fast);
+}
+
+.details[open] .chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.content {
+  padding: var(--space-5) var(--space-6);
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  animation: fadeInDown 0.3s ease-out;
+}
+
+
+/* ---- Responsive ---- */
+
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .summary, .content {
+    padding: var(--space-4) var(--space-5);
+  }
+}

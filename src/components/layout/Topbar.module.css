@@ -1,0 +1,636 @@
+/* ============================================================
+   Topbar — Sticky contextual header
+   ============================================================ */
+
+.topbar {
+  height: var(--nav-height);
+  padding: 0 var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-dark);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  flex-shrink: 0;
+  transition: box-shadow var(--transition-base), background-color var(--transition-base);
+}
+
+.topbar.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Left ---- */
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.menuBtn:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumbCrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumbRoot {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  font-size: 11px;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbRoot:hover {
+  color: var(--text-secondary);
+}
+
+.breadcrumbSep {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+  user-select: none;
+}
+
+.breadcrumbCurrent {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ---- Right ---- */
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--text-tertiary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  height: 36px;
+  width: 220px;
+  padding: 0 var(--space-4) 0 calc(var(--space-3) + 20px);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background-color: var(--white);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  background-color: var(--white);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.searchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ---- CTA Button ---- */
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-4);
+  background-color: var(--accent);
+  color: var(--white);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 4px 12px rgba(232, 89, 12, 0.3);
+}
+
+/* ---- Icon Button (Bell) ---- */
+
+.iconBtn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  background-color: var(--white);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.iconBtn:hover, .iconBtn.iconBtnActive {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background-color: var(--accent);
+  border: 2px solid var(--white);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Avatar Chip ---- */
+
+.avatarChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 4px 6px 4px 4px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.avatarChip:hover {
+  background: var(--bg-secondary);
+}
+
+.avatarChevron {
+  color: var(--text-tertiary);
+  transition: transform var(--transition-fast);
+}
+
+.avatarChip[aria-expanded="true"] .avatarChevron {
+  transform: rotate(180deg);
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  border: 2px solid var(--border);
+  transition: border-color var(--transition-fast);
+}
+
+.avatarChip:hover .avatar {
+  border-color: var(--accent);
+}
+
+/* ---- Dropdowns ---- */
+
+.dropdownWrap {
+  position: relative;
+}
+
+.dropdownPanel {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  width: 280px;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 100;
+  animation: dropdownIn 0.15s ease;
+  transform-origin: top right;
+}
+
+@keyframes dropdownIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Account dropdown panel */
+.accountPanel {
+  width: 260px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.accountHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.avatarLarge {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.accountHeaderText {
+  min-width: 0;
+}
+
+.accountHeaderText .userName {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accountHeaderText .userEmail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 2px 0 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accountDivider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 0;
+}
+
+.accountMenu {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2);
+}
+
+.accountMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.accountMenuItem:hover {
+  background: var(--bg-secondary);
+}
+
+.accountMenuItemDanger {
+  color: var(--danger);
+}
+
+.accountMenuItemDanger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.dropdownFooter {
+  padding: var(--space-2) var(--space-4);
+  text-align: center;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-light);
+}
+
+.dropdownFooter a {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  text-decoration: none;
+  padding: var(--space-2) 0;
+}
+
+.dropdownFooter a:hover {
+  color: var(--accent-hover);
+}
+
+.markReadBtn {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.markReadBtn:hover {
+  background: rgba(var(--accent-rgb), 0.1);
+}
+
+.dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg-primary);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.emptyStateIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.emptyState p {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.emptyState span {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.notificationList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar for notifications */
+.notificationList::-webkit-scrollbar {
+  width: 6px;
+}
+.notificationList::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notificationList::-webkit-scrollbar-thumb {
+  background-color: var(--border-dark);
+  border-radius: 10px;
+}
+
+.notifContent {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.notifContent.unread {
+  background-color: rgba(var(--accent-rgb), 0.03);
+}
+
+.notifIconWrap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.notifIconWrap.info { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+.notifIconWrap.success { background: rgba(16, 185, 129, 0.15); color: #059669; }
+.notifIconWrap.warning { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+.notifIconWrap.error { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+.notifTextWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.notifTitle {
+  margin: 0 0 2px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.notifMessage {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.notifTime {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.notificationItem {
+  padding: 0;
+  border: none;
+}
+
+.menuList {
+  list-style: none;
+  padding: var(--space-2) 0;
+  margin: 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menuItem:hover {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.logoutItem {
+  color: var(--danger);
+}
+
+.logoutItem:hover {
+  color: var(--danger);
+  background-color: var(--danger-light);
+}
+
+.menuDivider {
+  height: 1px;
+  background-color: var(--border-light);
+  margin: var(--space-2) 0;
+}
+
+/* ---- Mobile ---- */
+
+@media (max-width: 1024px) {
+  .topbar {
+    padding: 0 var(--space-4);
+  }
+
+  .menuBtn {
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .searchWrap {
+    display: none;
+  }
+
+  .ctaText {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaBtn {
+    display: none;
+  }
+
+  .breadcrumbRoot,
+  .breadcrumbSep {
+    display: none;
+  }
+
+  .breadcrumbCurrent {
+    font-size: var(--text-sm);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .iconBtn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .avatarChip {
+    min-height: 40px;
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0 var(--space-3);
+  }
+
+  .dropdownPanel {
+    width: min(280px, calc(100vw - 24px));
+    right: -4px;
+  }
+
+  .accountPanel {
+    width: min(260px, calc(100vw - 24px));
+    right: -4px;
+  }
+
+  .breadcrumbCurrent {
+    max-width: 110px;
+  }
+}

@@ -1,0 +1,116 @@
+.partsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.partCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.partHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.partBadge {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: var(--tracking-wide);
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.select {
+  height: 32px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-2);
+  cursor: pointer;
+}
+
+.marksLabel {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.marksInput {
+  height: 32px;
+  width: 65px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+  background-color: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-1);
+}
+
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: rgba(201, 42, 42, 0.2);
+}
+
+.textarea {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: var(--leading-normal);
+  resize: vertical;
+  min-height: 60px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}

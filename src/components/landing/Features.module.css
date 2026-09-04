@@ -1,0 +1,570 @@
+/* ============================================
+   Features Section — Puzzle Infographic
+   Matches reference: bold colored checkerboard,
+   large numbers, diagonal stripes, interlocking
+   tab/notch connectors.
+   ============================================ */
+
+.section {
+  background-color: var(--bg-secondary);
+  padding: var(--space-20) var(--space-6);
+  border-top: 1px solid var(--border-light);
+  position: relative;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+
+/* ---- Header ---- */
+
+.header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-16);
+}
+
+.label {
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  margin-bottom: var(--space-4);
+}
+
+.title {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-4);
+}
+
+.titleAccent {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ============================================
+   PUZZLE GRID
+   ============================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  position: relative;
+  overflow: visible;
+}
+
+
+/* ---- Card Base (Puzzle Piece) ---- */
+
+.card {
+  position: relative;
+  padding: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  overflow: visible;
+  animation: fadeInUp 0.6s ease-out both;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  will-change: transform;
+}
+
+
+/* Content wrapper — sits above the number */
+.cardContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+
+/* ============================================
+   CHECKERBOARD COLORING
+   TL (01) + BR (04) = accent orange
+   TR (02) + BL (03) = white
+   ============================================ */
+
+/* --- White pieces (TR=2, BL=3, BR=6) --- */
+.card:nth-child(2),
+.card:nth-child(3),
+.card:nth-child(6) {
+  background:
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 8px,
+      rgba(0, 0, 0, 0.09) 8px,
+      rgba(0, 0, 0, 0.09) 16px),
+    var(--white);
+}
+
+/* --- Colored pieces (TL=1, MR=4, BL=5) --- */
+.card:nth-child(1),
+.card:nth-child(4),
+.card:nth-child(5) {
+  background:
+    repeating-linear-gradient(-45deg,
+      transparent,
+      transparent 8px,
+      rgba(255, 255, 255, 0.1) 8px,
+      rgba(255, 255, 255, 0.1) 16px),
+    var(--accent);
+}
+
+
+/* ---- Large Piece Numbers ---- */
+
+.pieceNumber {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-6);
+  font-size: 5.5rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  font-family: var(--font-sans);
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  opacity: 0.8;
+}
+
+
+/* ============================================
+   COLORED CARD TEXT OVERRIDES
+   Cards 1, 4, and 5 have orange bg → need white text
+   ============================================ */
+
+.card:nth-child(1) .cardTitle,
+.card:nth-child(4) .cardTitle,
+.card:nth-child(5) .cardTitle {
+  color: var(--white);
+}
+
+.card:nth-child(1) .cardDescription,
+.card:nth-child(4) .cardDescription,
+.card:nth-child(5) .cardDescription {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.card:nth-child(1) .iconWrapper,
+.card:nth-child(4) .iconWrapper,
+.card:nth-child(5) .iconWrapper {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Card visual containers on colored pieces — frosted white for readability */
+.card:nth-child(1) .cardVisual,
+.card:nth-child(4) .cardVisual,
+.card:nth-child(5) .cardVisual {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Data rows inside visuals on colored cards stay readable */
+.card:nth-child(1) .dataRow,
+.card:nth-child(4) .dataRow,
+.card:nth-child(5) .dataRow {
+  background: var(--white);
+}
+
+/* Confidence bars on colored cards */
+.card:nth-child(1) .confLabel,
+.card:nth-child(4) .confLabel,
+.card:nth-child(5) .confLabel {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.card:nth-child(1) .bar,
+.card:nth-child(4) .bar,
+.card:nth-child(5) .bar {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* ============================================
+   OUTER CORNER ROUNDING
+   Only the 4 outer corners of the assembled
+   puzzle panel are rounded.
+   ============================================ */
+
+.card:nth-child(1) {
+  border-radius: var(--radius-2xl) 0 0 0;
+}
+
+.card:nth-child(2) {
+  border-radius: 0 var(--radius-2xl) 0 0;
+}
+
+.card:nth-child(3),
+.card:nth-child(4) {
+  border-radius: 0;
+}
+
+.card:nth-child(5) {
+  border-radius: 0 0 0 var(--radius-2xl);
+}
+
+.card:nth-child(6) {
+  border-radius: 0 0 var(--radius-2xl) 0;
+}
+
+
+/* ============================================
+   Z-INDEX STACKING
+   Higher z-index → tabs sit ON TOP of neighbors
+   ============================================ */
+
+.card:nth-child(1) {
+  z-index: 6;
+}
+
+.card:nth-child(2) {
+  z-index: 5;
+}
+
+.card:nth-child(3) {
+  z-index: 4;
+}
+
+.card:nth-child(4) {
+  z-index: 3;
+}
+
+.card:nth-child(5) {
+  z-index: 2;
+}
+
+.card:nth-child(6) {
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  z-index: 20 !important;
+}
+
+
+
+/* ============================================
+   CARD CONTENT STYLES
+   ============================================ */
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.cardTitle {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+
+.cardDescription {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ---- Unified Mini Badges ---- */
+
+.miniBadge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeSuccess {
+  background-color: var(--success-light);
+  color: var(--success);
+  border: 1px solid rgba(47, 158, 68, 0.2);
+}
+
+.badgeWarning {
+  background-color: var(--warning-light);
+  color: var(--warning);
+  border: 1px solid rgba(232, 89, 12, 0.2);
+}
+
+.badgeDanger {
+  background-color: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid rgba(201, 42, 42, 0.2);
+}
+
+.badgeNeutral {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+
+/* ---- Card Visuals (Mini UIs) ---- */
+
+.cardVisual {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  border: 1px solid var(--border-light);
+}
+
+.visualStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.visualMiniStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+}
+
+.visualMini {
+  /* container for single-row mini visuals */
+}
+
+.dataRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--white);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.dataText {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+
+/* -- Specific Mini Visuals -- */
+
+/* OCR */
+.ocrBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  background-color: var(--white);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.mockSquiggle {
+  width: 40px;
+  height: 12px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.arrow {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+.monoText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Confidence */
+.confRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.confLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  width: 24px;
+}
+
+.bar {
+  flex: 1;
+  height: 6px;
+  background-color: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.barFillSuccess {
+  height: 100%;
+  background-color: var(--success);
+  border-radius: var(--radius-full);
+}
+
+.barFillWarning {
+  height: 100%;
+  background-color: var(--warning);
+  border-radius: var(--radius-full);
+}
+
+/* Analytics Pie Chart */
+.pieChartWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+}
+
+.pieChart {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0% 70%,
+      var(--border-dark) 70% 85%,
+      var(--border-light) 85% 100%);
+}
+
+.pieLegend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dotAccent {
+  background-color: var(--accent);
+}
+
+.dotDark {
+  background-color: var(--border-dark);
+}
+
+.dotLight {
+  background-color: var(--border-light);
+}
+
+
+
+/* Export */
+.exportRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--white);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.fileIcon {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--white);
+  background-color: var(--success);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.fileName {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  /* Restore individual card styling */
+  .card,
+  .card:nth-child(1),
+  .card:nth-child(2),
+  .card:nth-child(3),
+  .card:nth-child(4),
+  .card:nth-child(5),
+  .card:nth-child(6) {
+    border-radius: var(--radius-xl) !important;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pieceNumber {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .pieceNumber {
+    font-size: 3rem;
+  }
+}
