@@ -131,11 +131,6 @@ export async function generateExcelExport(exam, students, questions = [], answer
     const isCopied = copiedStudentIds.has(student.id);
     const needsRecheck = studentAnswers.some(a => a.needs_review);
 
-    let gradeStatus = "Graded";
-    if (isError) gradeStatus = "Error (Not Graded)";
-    else if (isCopied) gradeStatus = "Copied";
-    else if (needsRecheck) gradeStatus = "Needs Review";
-
     summarySheet.addRow({
       roll: student.roll_number,
       name: student.student_name || 'Unknown',
@@ -181,11 +176,6 @@ export async function generateExcelExport(exam, students, questions = [], answer
     const studentAnswers = answers.filter(a => a.student_id === student.id);
     const isCopied = copiedStudentIds.has(student.id);
     const needsRecheck = studentAnswers.some(a => a.needs_review);
-
-    let gradeStatus = "Graded";
-    if (isError) gradeStatus = "Error (Not Graded)";
-    else if (isCopied) gradeStatus = "Copied";
-    else if (needsRecheck) gradeStatus = "Needs Review";
 
     const obtained = Number(student.total_obtained_marks || 0);
     const percentage = ((obtained / examTotalMarks) * 100).toFixed(1);

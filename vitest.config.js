@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    include: ['tests/**/*.test.js'],
+    include: ['tests/**/*.test.js', 'src/**/*.test.js'],
   },
   resolve: {
     alias: {

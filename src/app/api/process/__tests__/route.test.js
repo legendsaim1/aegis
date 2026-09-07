@@ -21,6 +21,7 @@ describe('POST /api/process', () => {
     
     const mockUpdate = vi.fn().mockReturnValue({
       eq: vi.fn().mockReturnThis(),
+      is: vi.fn().mockReturnThis(),
       in: vi.fn().mockReturnThis(),
       select: vi.fn().mockResolvedValue({ data: [{ id: 'student-1' }], error: null })
     });
@@ -54,7 +55,37 @@ describe('POST /api/process', () => {
     expect(res.status).toBe(500);
     expect(data.error).toContain('Pipeline failed: Simulated pipeline crash');
 
-    // Verify that supabase was called to update status to 'error'
-    expect(mockSupabase.updateSpy).toHaveBeenCalledWith({ status: 'error' });
+    // Verify that supabase was called to update status to 'error' (with a processed_at timestamp)
+    expect(mockSupabase.updateSpy).toHaveBeenCalledWith({ status: 'error', processed_at: expect.any(String) });
+  });
+
+  it('should return 409 and skip the pipeline when a concurrent request already claimed the student', async () => {
+    // Simulate losing the optimistic-concurrency claim: the conditional UPDATE matches 0 rows.
+    const claimUpdate = vi.fn().mockReturnValue({
+      eq: vi.fn().mockReturnThis(),
+      is: vi.fn().mockReturnThis(),
+      in: vi.fn().mockReturnThis(),
+      select: vi.fn().mockResolvedValue({ data: [], error: null })
+    });
+
+    mocks.supabaseServer.mockReturnValue({
+      from: vi.fn((table) => ({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        is: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({ data: table === 'exams' ? { id: 'exam-1' } : { status: 'pending' }, error: null }),
+        in: vi.fn().mockReturnThis(),
+        update: claimUpdate
+      }))
+    });
+
+    const req = {
+      json: async () => ({ examId: 'exam-1', studentId: 'student-1' })
+    };
+
+    const res = await POST(req);
+
+    expect(res.status).toBe(409);
+    expect(mocks.runGradingPipeline).not.toHaveBeenCalled();
   });
 });

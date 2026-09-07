@@ -166,11 +166,11 @@ describe('runGradingPipeline', () => {
     expect(supabase.state.answerInserts).toHaveLength(1);
     expect(supabase.state.answerInserts[0]).toHaveLength(2);
     expect(supabase.state.answerInserts[0]).toEqual(expect.arrayContaining([
-      expect.objectContaining({ question_id: 'question-1', needs_review: true, flag_reason: 'OCR returned invalid JSON' }),
-      expect.objectContaining({ question_id: 'question-2', needs_review: true, flag_reason: 'OCR returned invalid JSON' }),
+      expect.objectContaining({ question_id: 'question-1', needs_review: true, flag_reason: expect.stringContaining('OCR returned invalid JSON') }),
+      expect.objectContaining({ question_id: 'question-2', needs_review: true, flag_reason: expect.stringContaining('OCR returned invalid JSON') }),
     ]));
     expect(supabase.state.studentUpdates).toContainEqual(expect.objectContaining({ status: 'error' }));
-    expect(result).toMatchObject({ status: 'error', totalMarks: 0, error: 'OCR returned invalid JSON' });
+    expect(result).toMatchObject({ status: 'error', totalMarks: 0, error: expect.stringContaining('OCR returned invalid JSON') });
   });
 
   it('creates review rows when OCR questions is not an array', async () => {

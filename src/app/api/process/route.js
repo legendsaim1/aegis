@@ -69,13 +69,28 @@ export async function POST(req) {
 
   const now = new Date().toISOString();
 
-  // 3. Atomically claim the student row with timestamp so duplicate requests cannot process it concurrently
-  const { data: lockedRows, error: lockError } = await supabase
+  // 3. Atomically claim the student row with a timestamp. The claim is conditional on the
+  //    row still being in the state we observed above, so that of two concurrent requests
+  //    only one wins the transition and runs the pipeline (the loser matches 0 rows -> 409).
+  //    forceRetry is an explicit teacher override and claims unconditionally.
+  let claimQuery = supabase
     .from('students')
     .update({ status: 'processing', processed_at: now })
     .eq('id', studentId)
-    .eq('exam_id', examId)
-    .select('id');
+    .eq('exam_id', examId);
+
+  if (!forceRetry) {
+    claimQuery = claimQuery.eq('status', student.status);
+    if (student.status === 'processing') {
+      // Stale-processing recovery (P1-7): also require processed_at to be unchanged since
+      // we read it, so only one caller can re-claim a stale row.
+      claimQuery = student.processed_at
+        ? claimQuery.eq('processed_at', student.processed_at)
+        : claimQuery.is('processed_at', null);
+    }
+  }
+
+  const { data: lockedRows, error: lockError } = await claimQuery.select('id');
 
   if (lockError) {
     return Response.json({ error: `Failed to lock student for processing: ${lockError.message}` }, { status: 500 });

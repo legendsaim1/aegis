@@ -25,6 +25,10 @@ describe('runCopyDetection chunking and error handling', () => {
     insertedData = null;
 
     mockSupabase = {
+      // The atomic replace RPC is mocked as unavailable so the code exercises its
+      // documented fallback path (direct copy_flags delete + insert), which is what
+      // the deletedExamId / insertedData assertions below verify.
+      rpc: vi.fn().mockResolvedValue({ error: { message: 'rpc unavailable in test' } }),
       from: vi.fn().mockImplementation((table) => {
         if (table === 'exams') {
           const query = {
@@ -47,6 +51,7 @@ describe('runCopyDetection chunking and error handling', () => {
           const query = {
             select: () => query,
             eq: () => query,
+            in: () => query,
             then: (resolve) => resolve({ data: [{ id: 's1' }, { id: 's2' }, { id: 's3' }], error: null }),
           };
           return query;
